@@ -1,0 +1,27 @@
+{
+  "name": "mediaweb/silverstripe-jsend",
+  "description": "A simple JSend implementation",
+  "type": "silverstripe-module",
+  "keywords": [
+    "silverstripe",
+    "jsend",
+    "ajax",
+    "json",
+    "rest",
+    "module"
+  ],
+  "license": "BSD-3-Clause",
+  "authors": [
+    {
+      "name": "Martijn Schenk",
+      "email": "martijnschenk@loyals.nl"
+    }
+  ],
+  "require": {
+    "silverstripe/framework": "~3.4"
+  },
+  "extra": {
+    "installer-name": "jsend"
+  },
+  "target-dir": "jsend"
+}
