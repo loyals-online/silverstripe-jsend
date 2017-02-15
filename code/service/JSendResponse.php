@@ -45,6 +45,52 @@ class JSendResponse
     private $message;
 
     /**
+     * Parse a JSend response json
+     *
+     * @param $json
+     *
+     * @return static
+     * @throws \JSendParseException
+     */
+    public static function parse($json)
+    {
+        $json = json_decode($json);
+
+        if (!isset($json->status)) {
+            throw new JSendParseException('Could not parse data; required element \'status\' missing.');
+        }
+
+        $instance = new static($json->status);
+
+        if (!isset($json->code)) {
+            $json->code = 200;
+        }
+        $instance->setCode($json->code);
+
+        if ($instance->isError()) {
+            if (!isset($json->message)) {
+                throw new JSendParseException('Could not parse data; required element \'message\' missing.');
+            }
+            $instance->setMessage($json->message);
+        }
+
+        if ($instance->isSuccess() || $instance->isFail()) {
+            if (!isset($json->data)) {
+                throw new JSendParseException('Could not parse data; required element \'data\' missing.');
+            }
+            $instance->setData($json->data);
+        } else {
+            if ($instance->isError()) {
+                if (isset($json->data)) {
+                    $instance->setData($json->data);
+                }
+            }
+        }
+
+        return $instance;
+    }
+
+    /**
      * JSendResponse constructor.
      *
      * @param string            $status
@@ -150,6 +196,36 @@ class JSendResponse
     }
 
     /**
+     * Is the status for this response success?
+     *
+     * @return bool
+     */
+    public function isSuccess()
+    {
+        return $this->status == static::STATUS_SUCCESS;
+    }
+
+    /**
+     * Is the status for this response fail?
+     *
+     * @return bool
+     */
+    public function isFail()
+    {
+        return $this->status == static::STATUS_FAIL;
+    }
+
+    /**
+     * Is the status for this response error?
+     *
+     * @return bool
+     */
+    public function isError()
+    {
+        return $this->status == static::STATUS_ERROR;
+    }
+
+    /**
      * Set the data for this response
      *
      * @param object|array $data
@@ -171,6 +247,16 @@ class JSendResponse
     public function getData()
     {
         return $this->data;
+    }
+
+    /**
+     * Does this response have data?
+     *
+     * @return bool
+     */
+    public function hasData()
+    {
+        return !empty($this->data);
     }
 
     /**
@@ -219,6 +305,16 @@ class JSendResponse
     public function getMessage()
     {
         return $this->message;
+    }
+
+    /**
+     * Does this response have a message?
+     *
+     * @return bool
+     */
+    public function hasMessage()
+    {
+        return !empty($this->message);
     }
 
     /**
