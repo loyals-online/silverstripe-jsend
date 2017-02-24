@@ -13,7 +13,10 @@ var JSend = function (status, data, message, code) {
 JSend.parse = function (result) {
 
     if (typeof result.status == 'undefined') {
-        throw 'Could not parse data; required element \'status\' missing.';
+        result = JSON.parse(result);
+        if (typeof result.status == 'undefined') {
+            throw 'Could not parse data; required element \'status\' missing.';
+        }
     }
 
     var response = new JSend(result.status);
