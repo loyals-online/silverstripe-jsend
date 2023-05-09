@@ -1,5 +1,10 @@
 <?php
 
+namespace Loyals\JSend\Service;
+
+use Loyals\JSend\Exceptions\JSendParseException;
+use Exception;
+
 /**
  * Generate a proper json response for (ajax) communication
  *
@@ -50,7 +55,7 @@ class JSendResponse
      * @param $json
      *
      * @return static
-     * @throws \JSendParseException
+     * @throws JSendParseException
      */
     public static function parse($json)
     {

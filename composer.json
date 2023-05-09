@@ -1,7 +1,7 @@
 {
   "name": "mediaweb/silverstripe-jsend",
   "description": "A simple JSend implementation",
-  "type": "silverstripe-module",
+  "type": "silverstripe-vendormodule",
   "keywords": [
     "silverstripe",
     "jsend",
@@ -15,13 +15,23 @@
     {
       "name": "Martijn Schenk",
       "email": "martijnschenk@loyals.nl"
+    },
+    {
+      "name": "Gabrijel Gavranović",
+      "email": "gabrijel@gavro.nl"
     }
   ],
   "require": {
     "silverstripe/framework": "^4"
   },
-  "extra": {
-    "installer-name": "jsend"
+  "autoload": {
+    "psr-4": {
+      "Loyals\\JSend\\": "src/"
+    }
   },
-  "target-dir": "jsend"
+  "extra": {
+    "expose": [
+      "javascript"
+    ]
+  }
 }

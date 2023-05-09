@@ -1,0 +1,3 @@
+mappings:
+  JSendParseException: Loyals\JSend\Exceptions\JSendParseException
+  JSendResponse: Loyals\JSend\Service\JSendResponse
